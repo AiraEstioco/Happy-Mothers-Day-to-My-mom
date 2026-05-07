@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Mother's Day — My Mother</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Jost:wght@300;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- ══════════ LOADING ══════════ -->
+    <div id="loading">
+        <div class="petals-wrap" id="petals-load"></div>
+        <div class="loading-icon">💌</div>
+        <div class="loading-title">Happy Mother's Day</div>
+        <p class="loading-sub">Preparing a special letter for My Mom…</p>
+        <div class="loading-bar-wrap">
+            <div class="loading-bar"></div>
+        </div>
+    </div>
+
+    <!-- ══════════ PAGE 1 — SCRATCH ENVELOPE ══════════ -->
+    <div id="page-envelope">
+        <span class="float-deco" style="top:9%;left:7%;font-size:1.4rem;animation-delay:0s">🌸</span>
+        <span class="float-deco" style="top:18%;right:9%;font-size:1rem;animation-delay:1s">💕</span>
+        <span class="float-deco" style="bottom:14%;left:11%;font-size:1.2rem;animation-delay:.5s">🌷</span>
+        <span class="float-deco" style="bottom:18%;right:7%;font-size:.9rem;animation-delay:1.5s">✨</span>
+        <span class="float-deco" style="top:42%;left:3%;font-size:1.3rem;animation-delay:2s">🌺</span>
+        <span class="float-deco" style="top:36%;right:4%;font-size:1rem;animation-delay:.8s">💖</span>
+
+        <p class="env-title">A Special Letter For You</p>
+        <p class="env-sub">From someone who cares deeply</p>
+
+        <div class="env-scene" id="envScene">
+            <canvas id="sparkle-canvas"></canvas>
+
+            <div class="env-bob" id="envBob">
+                <div class="env-body-wrap" id="envBody">
+
+                    <!-- Main envelope box -->
+                    <div class="env-box" id="envBox">
+
+                        <!-- Bottom fold SVG -->
+                        <svg class="env-bottom-fold" viewBox="0 0 400 220" preserveAspectRatio="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <!-- left triangle fold -->
+                            <polygon points="0,220 0,0 200,130" fill="rgba(232,116,138,0.1)" />
+                            <!-- right triangle fold -->
+                            <polygon points="400,220 400,0 200,130" fill="rgba(232,116,138,0.08)" />
+                            <!-- bottom triangle fold -->
+                            <polygon points="0,220 400,220 200,100" fill="rgba(232,116,138,0.12)" />
+                            <!-- center diamond highlight -->
+                            <polygon points="0,220 200,100 400,220" fill="rgba(255,255,255,0.12)" />
+                        </svg>
+
+                        <!-- Address area -->
+                        <div class="env-address">
+                            <div class="env-address-name">My Mother</div>
+                            <div class="env-address-sub">with love ♥ - Aira , My Family and Jeff</div>
+                        </div>
+
+                        <!-- Heart burst surprise -->
+                        <div class="burst-heart-center" id="burstCenter">💖</div>
+
+                        <!-- Flying hearts (positions set via JS) -->
+                        <div id="heartBurst"></div>
+                        <div id="driftHearts"></div>
+
+                        <!-- Torn edge that appears after tear -->
+                        <div class="env-torn-edge" id="tornEdge">
+                            <svg viewBox="0 0 400 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+                                style="width:100%;height:20px;">
+                                <path d="M0,0 L12,8 L24,2 L38,12 L52,4 L65,10 L78,3 L93,14 L108,5 L120,11 L134,2 
+                       L148,9 L162,3 L177,13 L192,4 L206,10 L220,1 L234,8 L248,3 L263,11 L278,5 
+                       L292,13 L308,2 L322,9 L336,3 L350,12 L364,4 L378,10 L390,5 L400,8 L400,20 L0,20 Z"
+                                    fill="#fce0ea" stroke="rgba(232,116,138,0.4)" stroke-width=".8" />
+                            </svg>
+                        </div>
+
+                        <!-- TOP TEAR STRIP -->
+                        <div class="env-top-strip" id="topStrip">
+                            <!-- dashed perforation line -->
+                            <div class="perf-line"></div>
+                            <!-- jagged bottom of strip -->
+                            <svg class="tear-edge" viewBox="0 0 400 12" preserveAspectRatio="none"
+                                xmlns="http://www.w3.org/2000/svg" style="width:100%;height:12px;">
+                                <path d="M0,12 L0,6 L10,10 L20,4 L32,9 L44,2 L56,8 L68,3 L80,10 L92,4 L104,9 
+                       L116,2 L128,7 L140,3 L152,10 L164,5 L176,9 L188,1 L200,7 L212,3 L224,10 
+                       L236,4 L248,8 L260,2 L272,9 L284,4 L296,10 L308,3 L320,8 L332,2 L344,9 
+                       L356,4 L368,10 L380,3 L392,8 L400,6 L400,12 Z" fill="#fce0ea" />
+                            </svg>
+                            <!-- scratch text & arrow -->
+                            <span class="scratch-text">✂ scratch to open ✂</span>
+                            <span class="scratch-arrow">›</span>
+                        </div>
+
+                    </div><!-- env-box -->
+                </div><!-- env-body-wrap -->
+            </div><!-- env-bob -->
+
+            <!-- Confetti container -->
+            <div class="confetti-wrap" id="confettiWrap"></div>
+        </div><!-- env-scene -->
+
+        <p class="env-hint" id="envHint">✦ Click the envelope to scratch it open ✦</p>
+    </div>
+
+    <!-- ══════════ PAGE 2 — LETTER ══════════ -->
+    <div id="page-letter">
+        <span class="float-deco" style="top:2%;left:3%">🌸</span>
+        <span class="float-deco" style="top:5%;right:4%;animation-delay:1s">🌷</span>
+
+        <div class="letter-hero">
+            <p class="hero-eyebrow">✦ A heartfelt message ✦</p>
+            <h1 class="hero-title">Happy Mother's Day</h1>
+            <div class="hero-divider">
+                <hr><span>🌸</span>
+                <hr>
+            </div>
+        </div>
+
+        <div class="letter-section reveal">
+            <div class="letter-card">
+                <div class="letter-inner-border">
+                    <p class="letter-salutation">Dear My Mom</p>
+                    <div class="letter-body">
+                        <p>Happy Mother’s Day!</p>
+                        <p>From Aira, my family, and Jeff, we want to send you our warmest greetings on this very
+                            special day. Today is a beautiful reminder of how much you mean to us and how thankful we
+                            are to have you in our lives. You are not only a mother, but also a source of love,
+                            strength, comfort, and inspiration.</p>
+                        <p>We want you to know that your kindness, patience, and care are deeply appreciated. Every
+                            little thing you do for us has a big meaning. Your sacrifices, your guidance, your
+                            understanding, and your unconditional love have helped shape our lives in many wonderful
+                            ways. Even when days are tiring or challenging, you continue to give your best, and that is
+                            something truly special.</p>
+                        <p>Thank you for always being there for us. Thank you for the love you give without asking for
+                            anything in return. Thank you for your gentle words, your warm heart, your support, and your
+                            prayers. You make our lives brighter, and your presence gives us comfort and peace.</p>
+                        <p>Mother’s Day is only one day in a year, but you deserve to be appreciated every single day.
+                            You deserve happiness, good health, peace, and all the love that your heart can hold. We
+                            hope this day brings you smiles, laughter, and sweet memories with the people who love you
+                            most.</p>
+                        <p>Mom, you are strong, caring, beautiful, and truly amazing. We are grateful for everything you
+                            have done and everything you continue to do. No words can fully explain how thankful we are,
+                            but we hope this letter reminds you that you are loved more than you know.</p>
+                        <p>May God bless you always with good health, protection, joy, and strength. May your days be
+                            filled with love, positivity, and many blessings. We hope you continue to smile and feel
+                            proud of the love you have given to your family.</p>
+                        <p>Once again, Happy Mother’s Day, Mom. Thank you for being the heart of our family. We love you
+                            so much.</p>
+                    </div>
+                    <div class="letter-signature">
+                        <p>With warmth &amp; love,</p>
+                        <span class="sig-name">Aira, My Family and Jeff</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="max-width:860px;margin:0 auto 2rem;padding:0 1.5rem;" class="reveal">
+            <h2 class="section-title">She is…</h2>
+            <p class="section-sub">Words that describe you perfectly</p>
+        </div>
+        <div class="appreciation-grid reveal">
+            <div class="appr-card">
+                <div class="appr-icon">💗</div><span class="appr-word">Loving</span><span class="appr-desc">Pure of
+                    heart</span>
+            </div>
+            <div class="appr-card">
+                <div class="appr-icon">🌷</div><span class="appr-word">Caring</span><span class="appr-desc">Always
+                    there</span>
+            </div>
+            <div class="appr-card">
+                <div class="appr-icon">💪</div><span class="appr-word">Strong</span><span class="appr-desc">Never gives
+                    up</span>
+            </div>
+            <div class="appr-card">
+                <div class="appr-icon">🌸</div><span class="appr-word">Patient</span><span class="appr-desc">Gentle
+                    &amp;
+                    kind</span>
+            </div>
+            <div class="appr-card">
+                <div class="appr-icon">✨</div><span class="appr-word">Inspiring</span><span class="appr-desc">Lights the
+                    way</span>
+            </div>
+            <div class="appr-card">
+                <div class="appr-icon">🏡</div><span class="appr-word">Devoted</span><span class="appr-desc">Family
+                    first</span>
+            </div>
+        </div>
+
+        <div class="wishes-section reveal">
+            <h2 class="section-title">My Wishes For You</h2>
+            <p class="section-sub">From the heart</p>
+            <div class="wish-card">
+                <div class="wish-icon">🌺</div>
+                <p class="wish-title">May every day feel like Mother's Day</p>
+                <p>May your home always overflow with laughter, your heart be at peace, and your life be surrounded by
+                    people
+                    who love you as much as you love them.  Aira, My Family and Jeff deserve all the happiness this world can offer —
+                    today and
+                    every beautiful day ahead. 💕</p>
+            </div>
+        </div>
+
+        <footer class="site-footer reveal">
+            <div><span class="footer-flower">🌸</span><span class="footer-flower">🌷</span><span
+                    class="footer-flower">🌺</span></div>
+            <p class="footer-text">Happy Mother's Day, My Mother!</p>
+            <p class="footer-sub">With love · From Aira , My Family and Jeff</p>
+            <br>
+            <button class="read-again-btn" onclick="readAgain()">✉ Open Another Letter</button>
+        </footer>
+    </div>
+
+    <script>
+ 
+        (function () {
+            const wrap = document.getElementById('petals-load');
+            const icons = ['🌸', '💕', '✨', '🌷', '💖', '🌺', '⭐', '🩷'];
+            for (let i = 0; i < 20; i++) {
+                const el = document.createElement('span');
+                el.className = 'petal';
+                el.textContent = icons[i % icons.length];
+                el.style.left = Math.random() * 100 + '%';
+                el.style.animationDuration = (3.5 + Math.random() * 4.5) + 's';
+                el.style.animationDelay = (Math.random() * 5) + 's';
+                el.style.fontSize = (0.75 + Math.random() * 1.3) + 'rem';
+                wrap.appendChild(el);
+            }
+        })();
+
+        /* ════════════════════════════════
+           AMBIENT PARTICLES
+        ════════════════════════════════ */
+        (function () {
+            const c = document.getElementById('particles-canvas');
+            const ctx = c.getContext('2d');
+            let W, H, pts = [];
+            const resize = () => { W = c.width = innerWidth; H = c.height = innerHeight; };
+            window.addEventListener('resize', resize); resize();
+            function Pt() {
+                this.reset = () => {
+                    this.x = Math.random() * W; this.y = Math.random() * H;
+                    this.vx = (Math.random() - .5) * .35; this.vy = -.25 - Math.random() * .45;
+                    this.r = 1 + Math.random() * 2; this.a = .25 + Math.random() * .4;
+                    this.col = ['#f2a7b8', '#e8d5a3', '#d4b8e0', '#f8c4a0', '#fde8ee'][Math.floor(Math.random() * 5)];
+                }; this.reset();
+            }
+            for (let i = 0; i < 70; i++) pts.push(new Pt());
+            (function draw() {
+                ctx.clearRect(0, 0, W, H);
+                pts.forEach(p => {
+                    p.x += p.vx; p.y += p.vy;
+                    if (p.y < -10 || p.x < -10 || p.x > W + 10) p.reset();
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = p.col; ctx.globalAlpha = p.a; ctx.fill(); ctx.globalAlpha = 1;
+                }); requestAnimationFrame(draw);
+            })();
+        })();
+
+        /* ════════════════════════════════
+           SPARKLE CANVAS (for burst effect)
+        ════════════════════════════════ */
+        const sparkCanvas = document.getElementById('sparkle-canvas');
+        const sparkCtx = sparkCanvas.getContext('2d');
+        let sparkParticles = [];
+        function resizeSpark() {
+            const scene = document.getElementById('envScene');
+            sparkCanvas.width = scene.offsetWidth;
+            sparkCanvas.height = scene.offsetHeight;
+        }
+        function spawnSparkBurst(cx, cy) {
+            for (let i = 0; i < 40; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 2 + Math.random() * 6;
+                sparkParticles.push({
+                    x: cx, y: cy,
+                    vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+                    r: 2 + Math.random() * 3,
+                    alpha: 1,
+                    col: ['#f2a7b8', '#c9a96e', '#d4b8e0', '#e8748a', '#fff', '#f8c4a0'][Math.floor(Math.random() * 6)],
+                    life: 0, maxLife: 40 + Math.random() * 30,
+                    shape: Math.random() > .5 ? 'circle' : 'star'
+                });
+            }
+        }
+        function drawSpark() {
+            sparkCtx.clearRect(0, 0, sparkCanvas.width, sparkCanvas.height);
+            sparkParticles = sparkParticles.filter(p => {
+                p.x += p.vx; p.y += p.vy; p.vy += .08; p.life++;
+                p.alpha = 1 - (p.life / p.maxLife);
+                if (p.alpha <= 0) return false;
+                sparkCtx.save();
+                sparkCtx.globalAlpha = p.alpha;
+                if (p.shape === 'star') {
+                    sparkCtx.translate(p.x, p.y);
+                    sparkCtx.fillStyle = p.col;
+                    drawStar(sparkCtx, 0, 0, p.r, p.r * 2.2, 5);
+                    sparkCtx.fill();
+                } else {
+                    sparkCtx.beginPath(); sparkCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    sparkCtx.fillStyle = p.col; sparkCtx.fill();
+                }
+                sparkCtx.restore();
+                return true;
+            });
+            requestAnimationFrame(drawSpark);
+        }
+        function drawStar(ctx, cx, cy, ir, or, pts) {
+            ctx.beginPath();
+            for (let i = 0; i < pts * 2; i++) {
+                const r = i % 2 === 0 ? or : ir;
+                const a = (i * Math.PI) / pts - Math.PI / 2;
+                i === 0 ? ctx.moveTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r)
+                    : ctx.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r);
+            }
+            ctx.closePath();
+        }
+        drawSpark();
+
+        /* ════════════════════════════════
+           CONFETTI BURST
+        ════════════════════════════════ */
+        function spawnConfetti() {
+            const wrap = document.getElementById('confettiWrap');
+            wrap.innerHTML = '';
+            const colors = ['#f2a7b8', '#c9a96e', '#d4b8e0', '#e8748a', '#f8c4a0', '#fde8ee', '#b8e4f2'];
+            for (let i = 0; i < 36; i++) {
+                const el = document.createElement('div');
+                el.className = Math.random() > .5 ? 'conf-dot' : 'conf-rect';
+                const angle = (i / 36) * 360;
+                const dist = 80 + Math.random() * 100;
+                const vx = Math.cos(angle * Math.PI / 180) * dist;
+                const vy = Math.sin(angle * Math.PI / 180) * dist - 60;
+                el.style.setProperty('--cx', `translateX(${vx}px)`);
+                el.style.setProperty('--cy', `translateY(${vy}px)`);
+                el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                el.style.animationDelay = (Math.random() * .4) + 's';
+                el.style.transform = `rotate(${Math.random() * 360}deg)`;
+                wrap.appendChild(el);
+            }
+        }
+
+        /* ════════════════════════════════
+           LOADING → SHOW ENVELOPE
+        ════════════════════════════════ */
+        window.addEventListener('load', () => {
+            resizeSpark();
+            window.addEventListener('resize', resizeSpark);
+            setTimeout(() => document.getElementById('loading').classList.add('hide'), 2700);
+        });
+
+        /* ════════════════════════════════
+           SCRATCH / TEAR OPEN
+        ════════════════════════════════ */
+        let opened = false;
+        let scratchProgress = 0;
+        let scratchInterval = null;
+
+        document.getElementById('envScene').addEventListener('click', startScratch);
+        document.getElementById('envScene').addEventListener('touchstart', startScratch, { passive: true });
+
+        function startScratch() {
+            if (opened) return;
+            if (scratchInterval) return;
+
+            // Stop bobbing
+            document.getElementById('envBob').classList.add('no-bob');
+
+            // Animate the scratch fill across the strip
+            const strip = document.getElementById('topStrip');
+            const hint = document.getElementById('envHint');
+            hint.textContent = '✦ Tearing open… ✦';
+
+            // Add scratch sound visual — quick vibrate/shake of envelope
+            const body = document.getElementById('envBody');
+            body.style.animation = 'scratch-shake .4s ease';
+            body.style.setProperty('animation-fill-mode', 'forwards');
+
+            // Simulate scratch progress with a gradient that wipes left→right
+            let prog = 0;
+            strip.style.background = `linear-gradient(180deg,#fce4ed,#f7cdd8)`;
+
+            scratchInterval = setInterval(() => {
+                prog += 3.5;
+                // Show scratch marks visually
+                strip.style.background = `linear-gradient(90deg, 
+      rgba(232,116,138,0.25) ${prog - 10}%, 
+      rgba(255,240,245,0.9) ${prog}%, 
+      #fce4ed ${prog + 5}%)`;
+
+                if (prog >= 100) {
+                    clearInterval(scratchInterval);
+                    scratchInterval = null;
+                    doTear();
+                }
+            }, 18);
+        }
+
+        function doTear() {
+            opened = true;
+            const envBox = document.getElementById('envBox');
+            const hint = document.getElementById('envHint');
+
+            // Trigger CSS tear animation (spawns hearts via CSS)
+            envBox.classList.add('tearing', 'cracked');
+
+            // Spawn flying hearts
+            spawnHeartBurst();
+
+            // Pop confetti & sparkle burst
+            spawnConfetti();
+            const scene = document.getElementById('envScene');
+            const cx = scene.offsetWidth / 2;
+            const cy = scene.offsetHeight * .22;
+            spawnSparkBurst(cx, cy);
+
+            hint.textContent = '✦ Surprise! With all my love ✦';
+
+            // Transition to letter page
+            setTimeout(showLetterPage, 3000);
+        }
+
+        function spawnHeartBurst() {
+            const envBox = document.getElementById('envBox');
+            const burstWrap = document.getElementById('heartBurst');
+            const driftWrap = document.getElementById('driftHearts');
+            burstWrap.innerHTML = '';
+            driftWrap.innerHTML = '';
+
+            const hearts = ['💖', '💕', '💗', '💓', '💞', '🩷', '❤️', '💝', '💘', '✨', '🌸', '⭐', '🌷', '💫'];
+            const drifters = ['💖', '💕', '💗', '🩷', '🌸', '💞', '✨', '💓'];
+
+            // Burst hearts fly outward from center
+            const cx = envBox.offsetWidth / 2;
+            const cy = envBox.offsetHeight / 2;
+
+            for (let i = 0; i < 22; i++) {
+                const el = document.createElement('span');
+                el.className = 'burst-heart';
+                const angle = (i / 22) * Math.PI * 2;
+                const dist = 60 + Math.random() * 110;
+                const tx = Math.cos(angle) * dist;
+                const ty = Math.sin(angle) * dist - 20;
+                const r1 = (Math.random() * 40 - 20) + 'deg';
+                const r2 = (Math.random() * 60 - 30) + 'deg';
+                const dur = (.9 + Math.random() * .7) + 's';
+                const delay = (Math.random() * .4) + 's';
+                el.textContent = hearts[i % hearts.length];
+                el.style.cssText = `
+          position:absolute;
+          left:${cx}px; top:${cy}px;
+          --tx:${tx}px; --ty:${ty}px;
+          --r1:${r1}; --r2:${r2};
+          --dur:${dur}; --delay:${delay};
+          font-size:${1.1 + Math.random() * 1.2}rem;
+        `;
+                burstWrap.appendChild(el);
+            }
+
+            // Drift hearts float up gently
+            for (let i = 0; i < 12; i++) {
+                const el = document.createElement('span');
+                el.className = 'drift-heart';
+                const dx = (Math.random() * 160 - 80) + 'px';
+                const wobble = (Math.random() * 30 - 15) + 'px';
+                const ddur = (1.4 + Math.random() * 1.2) + 's';
+                const ddelay = (.2 + Math.random() * .9) + 's';
+                el.textContent = drifters[i % drifters.length];
+                el.style.cssText = `
+          position:absolute;
+          left:${cx}px; bottom:${envBox.offsetHeight * .5}px;
+          --dx:${dx}; --wobble:${wobble};
+          --ddur:${ddur}; --ddelay:${ddelay};
+          font-size:${.9 + Math.random() * .9}rem;
+        `;
+                driftWrap.appendChild(el);
+            }
+
+            // Force reflow so CSS animations trigger
+            void burstWrap.offsetWidth;
+        }
+
+        function showLetterPage() {
+            document.getElementById('page-envelope').classList.add('hide');
+            const lp = document.getElementById('page-letter');
+            lp.classList.add('show');
+            requestAnimationFrame(() => requestAnimationFrame(() => lp.classList.add('visible')));
+            window.scrollTo(0, 0);
+            initScrollReveal();
+        }
+
+        /* ════════════════════════════════
+           READ AGAIN
+        ════════════════════════════════ */
+        function readAgain() {
+            opened = false;
+            scratchProgress = 0;
+            if (scratchInterval) { clearInterval(scratchInterval); scratchInterval = null; }
+
+            const lp = document.getElementById('page-letter');
+            lp.classList.remove('visible');
+            setTimeout(() => lp.classList.remove('show'), 700);
+
+            document.getElementById('page-envelope').classList.remove('hide');
+
+            // reset envelope state
+            const envBox = document.getElementById('envBox');
+            envBox.classList.remove('tearing', 'cracked');
+            document.getElementById('envBob').classList.remove('no-bob');
+            document.getElementById('topStrip').style.background = '';
+            document.getElementById('topStrip').style.animation = '';
+            document.getElementById('envHint').textContent = '✦ Click the envelope to scratch it open ✦';
+            document.getElementById('confettiWrap').innerHTML = '';
+            document.getElementById('heartBurst').innerHTML = '';
+            document.getElementById('driftHearts').innerHTML = '';
+            sparkParticles = [];
+
+            window.scrollTo(0, 0);
+        }
+
+        /* ════════════════════════════════
+           SCROLL REVEAL
+        ════════════════════════════════ */
+        function initScrollReveal() {
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+            }, { threshold: .12 });
+            document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+        }
+    </script>
+
+    <style>
+        /* shake on scratch */
+        @keyframes scratch-shake {
+            0% {
+                transform: translateX(0)
+            }
+
+            20% {
+                transform: translateX(-4px) rotate(-.5deg)
+            }
+
+            40% {
+                transform: translateX(4px) rotate(.5deg)
+            }
+
+            60% {
+                transform: translateX(-3px) rotate(-.3deg)
+            }
+
+            80% {
+                transform: translateX(3px) rotate(.3deg)
+            }
+
+            100% {
+                transform: translateX(0)
+            }
+        }
+    </style>
+</body>
+
+</html>
