@@ -1,5 +1,5 @@
 
-        :root {
+    :root {
             --blush: #f2a7b8;
             --cream: #fdf6f0;
             --gold: #c9a96e;
@@ -30,6 +30,13 @@
             inset: 0;
             pointer-events: none;
             z-index: 0;
+        }
+
+        #bg-anim-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 11; /* above envelope(10) and letter(5), pointer-events:none so clicks pass through */
         }
 
         /* ═══ LOADING ═══ */
@@ -908,27 +915,6 @@
             color: var(--soft-ink);
         }
 
-        .read-again-btn {
-            display: inline-block;
-            margin-top: 2rem;
-            padding: .85rem 2.6rem;
-            background: linear-gradient(135deg, var(--blush), var(--rose));
-            color: #fff;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Jost', sans-serif;
-            font-size: .8rem;
-            letter-spacing: .15em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: transform .3s, box-shadow .3s;
-            box-shadow: 0 8px 25px rgba(232, 116, 138, .35);
-        }
-
-        .read-again-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 14px 35px rgba(232, 116, 138, .45);
-        }
 
         .reveal {
             opacity: 0;
