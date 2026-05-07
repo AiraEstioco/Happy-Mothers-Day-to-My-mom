@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Jost:wght@300;400&display=swap"
         rel="stylesheet">
-        <link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="src/style.css">
 </head>
-<body>
-
 
 <body>
 
@@ -227,7 +226,7 @@
         (function () {
             const wrap = document.getElementById('petals-load');
             const icons = ['🌸', '💕', '✨', '🌷', '💖', '🌺', '⭐', '🩷'];
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 10; i++) {
                 const el = document.createElement('span');
                 el.className = 'petal';
                 el.textContent = icons[i % icons.length];
@@ -240,7 +239,8 @@
         })();
 
 
-        (function () {
+        /* dots canvas — ticked by master RAF */
+        window._ptsTick = (function () {
             const c = document.getElementById('particles-canvas');
             const ctx = c.getContext('2d');
             let W, H, pts = [];
@@ -249,21 +249,21 @@
             function Pt() {
                 this.reset = () => {
                     this.x = Math.random() * W; this.y = Math.random() * H;
-                    this.vx = (Math.random() - .5) * .35; this.vy = -.25 - Math.random() * .45;
-                    this.r = 1 + Math.random() * 2; this.a = .25 + Math.random() * .4;
+                    this.vx = (Math.random() - .5) * .3; this.vy = -.2 - Math.random() * .35;
+                    this.r = .8 + Math.random() * 1.5; this.a = .15 + Math.random() * .3;
                     this.col = ['#f2a7b8', '#e8d5a3', '#d4b8e0', '#f8c4a0', '#fde8ee'][Math.floor(Math.random() * 5)];
                 }; this.reset();
             }
-            for (let i = 0; i < 35; i++) pts.push(new Pt());
-            (function draw() {
+            for (let i = 0; i < 18; i++) pts.push(new Pt());
+            return function () {
                 ctx.clearRect(0, 0, W, H);
                 pts.forEach(p => {
                     p.x += p.vx; p.y += p.vy;
                     if (p.y < -10 || p.x < -10 || p.x > W + 10) p.reset();
                     ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
                     ctx.fillStyle = p.col; ctx.globalAlpha = p.a; ctx.fill(); ctx.globalAlpha = 1;
-                }); requestAnimationFrame(draw);
-            })();
+                });
+            };
         })();
 
 
@@ -276,7 +276,7 @@
             sparkCanvas.height = scene.offsetHeight;
         }
         function spawnSparkBurst(cx, cy) {
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 20; i++) {
                 const angle = Math.random() * Math.PI * 2;
                 const speed = 2 + Math.random() * 6;
                 sparkParticles.push({
@@ -310,7 +310,7 @@
                 sparkCtx.restore();
                 return true;
             });
-            requestAnimationFrame(drawSpark);
+            /* ticked by master RAF — no own loop */
         }
         function drawStar(ctx, cx, cy, ir, or, pts) {
             ctx.beginPath();
@@ -322,7 +322,7 @@
             }
             ctx.closePath();
         }
-        drawSpark();
+        /* drawSpark ticked by master RAF */
 
 
         function spawnConfetti() {
@@ -528,120 +528,130 @@
 
     <script>
 
-    (function() {
-      const canvas = document.getElementById('bg-anim-canvas');
-      const ctx = canvas.getContext('2d');
-      let W, H;
+        (function () {
+            const canvas = document.getElementById('bg-anim-canvas');
+            const ctx = canvas.getContext('2d');
+            let W, H;
 
-      function resize() {
-        W = canvas.width = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-      }
-      window.addEventListener('resize', resize);
-      resize();
+            function resize() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
 
-      /* ── Emoji particles ── */
-      const EMOJIS = [
-        { e: '🌸', w: 4, size: [18, 32] },
-        { e: '🌷', w: 3, size: [16, 28] },
-        { e: '🌺', w: 3, size: [16, 28] },
-        { e: '🌼', w: 2, size: [14, 24] },
-        { e: '🌻', w: 1, size: [14, 22] },
-        { e: '💖', w: 3, size: [14, 24] },
-        { e: '💕', w: 2, size: [12, 20] },
-        { e: '🩷', w: 2, size: [12, 20] },
-        { e: '✨', w: 3, size: [12, 20] },
-        { e: '💫', w: 2, size: [12, 18] },
-        { e: '🦋', w: 2, size: [18, 30] },
-        { e: '🍃', w: 2, size: [12, 20] },
-        { e: '⭐', w: 1, size: [10, 18] },
-      ];
+            /* ── Emoji particles ── */
+            const EMOJIS = [
+                { e: '🌸', w: 4, size: [18, 32] },
+                { e: '🌷', w: 3, size: [16, 28] },
+                { e: '🌺', w: 3, size: [16, 28] },
+                { e: '🌼', w: 2, size: [14, 24] },
+                { e: '🌻', w: 1, size: [14, 22] },
+                { e: '💖', w: 3, size: [14, 24] },
+                { e: '💕', w: 2, size: [12, 20] },
+                { e: '🩷', w: 2, size: [12, 20] },
+                { e: '✨', w: 3, size: [12, 20] },
+                { e: '💫', w: 2, size: [12, 18] },
+                { e: '🦋', w: 2, size: [18, 30] },
+                { e: '🍃', w: 2, size: [12, 20] },
+                { e: '⭐', w: 1, size: [10, 18] },
+            ];
 
-      // Weighted pool
-      const POOL = [];
-      EMOJIS.forEach(item => {
-        for (let i = 0; i < item.w; i++) POOL.push(item);
-      });
+            // Weighted pool
+            const POOL = [];
+            EMOJIS.forEach(item => {
+                for (let i = 0; i < item.w; i++) POOL.push(item);
+            });
 
-      function randItem() { return POOL[Math.floor(Math.random() * POOL.length)]; }
+            function randItem() { return POOL[Math.floor(Math.random() * POOL.length)]; }
 
-      class Particle {
-        constructor(initialY) {
-          this.spawn(initialY);
-        }
-        spawn(startY) {
-          const item = randItem();
-          this.emoji = item.e;
-          this.size = item.size[0] + Math.random() * (item.size[1] - item.size[0]);
-          this.x = Math.random() * W;
-          this.y = startY !== undefined ? startY : -this.size - Math.random() * H;
-          // Falling speed
-          this.vy = 0.4 + Math.random() * 1.2;
-          // Horizontal sway
-          this.vx = (Math.random() - 0.5) * 0.5;
-          // Wobble
-          this.wobble = Math.random() * Math.PI * 2;
-          this.wobbleSpeed = 0.01 + Math.random() * 0.025;
-          this.wobbleAmp = 0.8 + Math.random() * 1.8;
-          // Rotation
-          this.rot = Math.random() * Math.PI * 2;
-          this.rotSpeed = (Math.random() - 0.5) * 0.04;
-          // Opacity
-          this.alpha = 0.15 + Math.random() * 0.55;
-          // Scale pulse (for hearts/stars)
-          this.pulse = Math.random() * Math.PI * 2;
-          this.pulseSpeed = 0.02 + Math.random() * 0.03;
-          this.scale = 1;
-        }
-        update() {
-          this.wobble += this.wobbleSpeed;
-          this.x += this.vx + Math.sin(this.wobble) * this.wobbleAmp;
-          this.y += this.vy;
-          this.rot += this.rotSpeed;
-          this.pulse += this.pulseSpeed;
-          this.scale = 1 + Math.sin(this.pulse) * 0.08;
-          if (this.y > H + this.size + 20) this.spawn();
-        }
-        draw() {
-          ctx.save();
-          ctx.globalAlpha = this.alpha;
-          ctx.translate(this.x, this.y);
-          ctx.rotate(this.rot);
-          ctx.scale(this.scale, this.scale);
-          ctx.font = `${this.size}px serif`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(this.emoji, 0, 0);
-          ctx.restore();
-        }
-      }
+            class Particle {
+                constructor(initialY) {
+                    this.spawn(initialY);
+                }
+                spawn(startY) {
+                    const item = randItem();
+                    this.emoji = item.e;
+                    this.size = item.size[0] + Math.random() * (item.size[1] - item.size[0]);
+                    this.x = Math.random() * W;
+                    this.y = startY !== undefined ? startY : -this.size - Math.random() * H;
+                    // Falling speed
+                    this.vy = 0.4 + Math.random() * 1.2;
+                    // Horizontal sway
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    // Wobble
+                    this.wobble = Math.random() * Math.PI * 2;
+                    this.wobbleSpeed = 0.01 + Math.random() * 0.025;
+                    this.wobbleAmp = 0.8 + Math.random() * 1.8;
+                    // Rotation
+                    this.rot = Math.random() * Math.PI * 2;
+                    this.rotSpeed = (Math.random() - 0.5) * 0.04;
+                    // Opacity
+                    this.alpha = 0.15 + Math.random() * 0.55;
+                    // Scale pulse (for hearts/stars)
+                    this.pulse = Math.random() * Math.PI * 2;
+                    this.pulseSpeed = 0.02 + Math.random() * 0.03;
+                    this.scale = 1;
+                }
+                update() {
+                    this.wobble += this.wobbleSpeed;
+                    this.x += this.vx + Math.sin(this.wobble) * this.wobbleAmp;
+                    this.y += this.vy;
+                    this.rot += this.rotSpeed;
+                    this.pulse += this.pulseSpeed;
+                    this.scale = 1 + Math.sin(this.pulse) * 0.08;
+                    if (this.y > H + this.size + 20) this.spawn();
+                }
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.alpha;
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rot);
+                    ctx.scale(this.scale, this.scale);
+                    ctx.font = `${this.size}px serif`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(this.emoji, 0, 0);
+                    ctx.restore();
+                }
+            }
 
-      /* Spawn particles — capped at 28 for performance */
-      const COUNT = Math.min(28, Math.floor(W * H / 30000));
-      const particles = [];
-      for (let i = 0; i < COUNT; i++) {
-        particles.push(new Particle(Math.random() * H));
-      }
 
-      /* RAF loop with frame-skip so slow devices don't choke */
-      let _lastT = 0;
-      function loop(ts) {
-        const dt = Math.min((ts - _lastT) / 16.67, 3);
-        _lastT = ts;
-        ctx.clearRect(0, 0, W, H);
-        particles.forEach(p => { p.update(); p.draw(); });
-        requestAnimationFrame(loop);
-      }
-      requestAnimationFrame(loop);
+            const COUNT = Math.min(20, Math.floor(W * H / 40000));
+            const particles = [];
+            for (let i = 0; i < COUNT; i++) {
+                particles.push(new Particle(Math.random() * H));
+            }
 
-      /* Rising flowers — capped to prevent DOM leak */
-      let _risingCount = 0;
-      function spawnRisingFlower() {
-        if (_risingCount >= 5) return; // cap concurrent DOM elements
-        _risingCount++;
-        const item = EMOJIS[Math.floor(Math.random() * 5)]; // only flowers
-        const el = document.createElement('span');
-        el.style.cssText = `
+
+            let _lastT = 0;
+            function masterLoop(ts) {
+
+                if (ts - _lastT < 14) { requestAnimationFrame(masterLoop); return; }
+                _lastT = ts;
+
+
+                ctx.clearRect(0, 0, W, H);
+                particles.forEach(p => { p.update(); p.draw(); });
+
+
+                if (window._ptsTick) window._ptsTick();
+
+
+                if (typeof drawSpark === 'function') drawSpark();
+
+                requestAnimationFrame(masterLoop);
+            }
+            requestAnimationFrame(masterLoop);
+
+            /* Rising flowers — capped to prevent DOM leak */
+            let _risingCount = 0;
+            function spawnRisingFlower() {
+                if (_risingCount >= 5) return; // cap concurrent DOM elements
+                _risingCount++;
+                const item = EMOJIS[Math.floor(Math.random() * 5)]; // only flowers
+                const el = document.createElement('span');
+                el.style.cssText = `
           position:fixed;
           left:${5 + Math.random() * 90}%;
           bottom:-40px;
@@ -652,21 +662,34 @@
           animation: rise-flower ${3 + Math.random() * 3}s ease-out forwards;
           --dx: ${(Math.random() - 0.5) * 120}px;
         `;
-        el.textContent = item.e;
-        document.body.appendChild(el);
-        el.addEventListener('animationend', () => { el.remove(); _risingCount--; });
-      }
-      setInterval(spawnRisingFlower, 2500);
+                el.textContent = item.e;
+                document.body.appendChild(el);
+                el.addEventListener('animationend', () => { el.remove(); _risingCount--; });
+            }
+            setInterval(spawnRisingFlower, 2500);
 
-    })();
+        })();
     </script>
 
     <style>
         @keyframes rise-flower {
-          0%   { opacity:0; transform: translateY(0) translateX(0) scale(0.5) rotate(0deg); }
-          15%  { opacity:0.7; }
-          80%  { opacity:0.5; }
-          100% { opacity:0; transform: translateY(-70vh) translateX(var(--dx,0)) scale(1.2) rotate(360deg); }
+            0% {
+                opacity: 0;
+                transform: translateY(0) translateX(0) scale(0.5) rotate(0deg);
+            }
+
+            15% {
+                opacity: 0.7;
+            }
+
+            80% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-70vh) translateX(var(--dx, 0)) scale(1.2) rotate(360deg);
+            }
         }
     </style>
 
