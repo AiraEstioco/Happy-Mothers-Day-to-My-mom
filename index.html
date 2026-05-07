@@ -8,14 +8,14 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Jost:wght@300;400&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="src/style.css">
 </head>
 
 <body>
 
     <canvas id="particles-canvas"></canvas>
 
-    <!-- ══════════ LOADING ══════════ -->
+   
     <div id="loading">
         <div class="petals-wrap" id="petals-load"></div>
         <div class="loading-icon">💌</div>
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <!-- ══════════ PAGE 1 — SCRATCH ENVELOPE ══════════ -->
+    
     <div id="page-envelope">
         <span class="float-deco" style="top:9%;left:7%;font-size:1.4rem;animation-delay:0s">🌸</span>
         <span class="float-deco" style="top:18%;right:9%;font-size:1rem;animation-delay:1s">💕</span>
@@ -44,36 +44,36 @@
             <div class="env-bob" id="envBob">
                 <div class="env-body-wrap" id="envBody">
 
-                    <!-- Main envelope box -->
+                    
                     <div class="env-box" id="envBox">
 
-                        <!-- Bottom fold SVG -->
+                        
                         <svg class="env-bottom-fold" viewBox="0 0 400 220" preserveAspectRatio="none"
                             xmlns="http://www.w3.org/2000/svg">
-                            <!-- left triangle fold -->
+                           
                             <polygon points="0,220 0,0 200,130" fill="rgba(232,116,138,0.1)" />
-                            <!-- right triangle fold -->
+                            
                             <polygon points="400,220 400,0 200,130" fill="rgba(232,116,138,0.08)" />
-                            <!-- bottom triangle fold -->
+                           
                             <polygon points="0,220 400,220 200,100" fill="rgba(232,116,138,0.12)" />
-                            <!-- center diamond highlight -->
+                            
                             <polygon points="0,220 200,100 400,220" fill="rgba(255,255,255,0.12)" />
                         </svg>
 
-                        <!-- Address area -->
+                       
                         <div class="env-address">
                             <div class="env-address-name">My Mother</div>
                             <div class="env-address-sub">with love ♥ - Aira , My Family and Jeff</div>
                         </div>
 
-                        <!-- Heart burst surprise -->
+                       
                         <div class="burst-heart-center" id="burstCenter">💖</div>
 
-                        <!-- Flying hearts (positions set via JS) -->
+                        
                         <div id="heartBurst"></div>
                         <div id="driftHearts"></div>
 
-                        <!-- Torn edge that appears after tear -->
+                      
                         <div class="env-torn-edge" id="tornEdge">
                             <svg viewBox="0 0 400 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
                                 style="width:100%;height:20px;">
@@ -84,11 +84,11 @@
                             </svg>
                         </div>
 
-                        <!-- TOP TEAR STRIP -->
+                        
                         <div class="env-top-strip" id="topStrip">
-                            <!-- dashed perforation line -->
+                           
                             <div class="perf-line"></div>
-                            <!-- jagged bottom of strip -->
+                          
                             <svg class="tear-edge" viewBox="0 0 400 12" preserveAspectRatio="none"
                                 xmlns="http://www.w3.org/2000/svg" style="width:100%;height:12px;">
                                 <path d="M0,12 L0,6 L10,10 L20,4 L32,9 L44,2 L56,8 L68,3 L80,10 L92,4 L104,9 
@@ -96,23 +96,23 @@
                        L236,4 L248,8 L260,2 L272,9 L284,4 L296,10 L308,3 L320,8 L332,2 L344,9 
                        L356,4 L368,10 L380,3 L392,8 L400,6 L400,12 Z" fill="#fce0ea" />
                             </svg>
-                            <!-- scratch text & arrow -->
+                           
                             <span class="scratch-text">✂ scratch to open ✂</span>
                             <span class="scratch-arrow">›</span>
                         </div>
 
-                    </div><!-- env-box -->
-                </div><!-- env-body-wrap -->
-            </div><!-- env-bob -->
+                    </div>
+                </div>
+            </div>
 
-            <!-- Confetti container -->
+           
             <div class="confetti-wrap" id="confettiWrap"></div>
-        </div><!-- env-scene -->
+        </div>
 
         <p class="env-hint" id="envHint">✦ Click the envelope to scratch it open ✦</p>
     </div>
 
-    <!-- ══════════ PAGE 2 — LETTER ══════════ -->
+   
     <div id="page-letter">
         <span class="float-deco" style="top:2%;left:3%">🌸</span>
         <span class="float-deco" style="top:5%;right:4%;animation-delay:1s">🌷</span>
@@ -238,9 +238,7 @@
             }
         })();
 
-        /* ════════════════════════════════
-           AMBIENT PARTICLES
-        ════════════════════════════════ */
+       
         (function () {
             const c = document.getElementById('particles-canvas');
             const ctx = c.getContext('2d');
@@ -267,9 +265,7 @@
             })();
         })();
 
-        /* ════════════════════════════════
-           SPARKLE CANVAS (for burst effect)
-        ════════════════════════════════ */
+       
         const sparkCanvas = document.getElementById('sparkle-canvas');
         const sparkCtx = sparkCanvas.getContext('2d');
         let sparkParticles = [];
@@ -327,9 +323,7 @@
         }
         drawSpark();
 
-        /* ════════════════════════════════
-           CONFETTI BURST
-        ════════════════════════════════ */
+      
         function spawnConfetti() {
             const wrap = document.getElementById('confettiWrap');
             wrap.innerHTML = '';
@@ -350,18 +344,14 @@
             }
         }
 
-        /* ════════════════════════════════
-           LOADING → SHOW ENVELOPE
-        ════════════════════════════════ */
+        
         window.addEventListener('load', () => {
             resizeSpark();
             window.addEventListener('resize', resizeSpark);
             setTimeout(() => document.getElementById('loading').classList.add('hide'), 2700);
         });
 
-        /* ════════════════════════════════
-           SCRATCH / TEAR OPEN
-        ════════════════════════════════ */
+        
         let opened = false;
         let scratchProgress = 0;
         let scratchInterval = null;
@@ -373,26 +363,26 @@
             if (opened) return;
             if (scratchInterval) return;
 
-            // Stop bobbing
+            
             document.getElementById('envBob').classList.add('no-bob');
 
-            // Animate the scratch fill across the strip
+           
             const strip = document.getElementById('topStrip');
             const hint = document.getElementById('envHint');
             hint.textContent = '✦ Tearing open… ✦';
 
-            // Add scratch sound visual — quick vibrate/shake of envelope
+            
             const body = document.getElementById('envBody');
             body.style.animation = 'scratch-shake .4s ease';
             body.style.setProperty('animation-fill-mode', 'forwards');
 
-            // Simulate scratch progress with a gradient that wipes left→right
+            
             let prog = 0;
             strip.style.background = `linear-gradient(180deg,#fce4ed,#f7cdd8)`;
 
             scratchInterval = setInterval(() => {
                 prog += 3.5;
-                // Show scratch marks visually
+                
                 strip.style.background = `linear-gradient(90deg, 
       rgba(232,116,138,0.25) ${prog - 10}%, 
       rgba(255,240,245,0.9) ${prog}%, 
@@ -411,13 +401,13 @@
             const envBox = document.getElementById('envBox');
             const hint = document.getElementById('envHint');
 
-            // Trigger CSS tear animation (spawns hearts via CSS)
+            
             envBox.classList.add('tearing', 'cracked');
 
-            // Spawn flying hearts
+            
             spawnHeartBurst();
 
-            // Pop confetti & sparkle burst
+           
             spawnConfetti();
             const scene = document.getElementById('envScene');
             const cx = scene.offsetWidth / 2;
@@ -426,7 +416,7 @@
 
             hint.textContent = '✦ Surprise! With all my love ✦';
 
-            // Transition to letter page
+            
             setTimeout(showLetterPage, 3000);
         }
 
@@ -440,7 +430,7 @@
             const hearts = ['💖', '💕', '💗', '💓', '💞', '🩷', '❤️', '💝', '💘', '✨', '🌸', '⭐', '🌷', '💫'];
             const drifters = ['💖', '💕', '💗', '🩷', '🌸', '💞', '✨', '💓'];
 
-            // Burst hearts fly outward from center
+        
             const cx = envBox.offsetWidth / 2;
             const cy = envBox.offsetHeight / 2;
 
@@ -467,7 +457,7 @@
                 burstWrap.appendChild(el);
             }
 
-            // Drift hearts float up gently
+          
             for (let i = 0; i < 12; i++) {
                 const el = document.createElement('span');
                 el.className = 'drift-heart';
@@ -486,7 +476,7 @@
                 driftWrap.appendChild(el);
             }
 
-            // Force reflow so CSS animations trigger
+           
             void burstWrap.offsetWidth;
         }
 
@@ -499,9 +489,7 @@
             initScrollReveal();
         }
 
-        /* ════════════════════════════════
-           READ AGAIN
-        ════════════════════════════════ */
+       
         function readAgain() {
             opened = false;
             scratchProgress = 0;
@@ -513,7 +501,7 @@
 
             document.getElementById('page-envelope').classList.remove('hide');
 
-            // reset envelope state
+            
             const envBox = document.getElementById('envBox');
             envBox.classList.remove('tearing', 'cracked');
             document.getElementById('envBob').classList.remove('no-bob');
@@ -528,9 +516,7 @@
             window.scrollTo(0, 0);
         }
 
-        /* ════════════════════════════════
-           SCROLL REVEAL
-        ════════════════════════════════ */
+   
         function initScrollReveal() {
             const obs = new IntersectionObserver(entries => {
                 entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
@@ -540,7 +526,7 @@
     </script>
 
     <style>
-        /* shake on scratch */
+     
         @keyframes scratch-shake {
             0% {
                 transform: translateX(0)
